@@ -3,7 +3,7 @@ import { decodeJwt } from "../utils/decodejwt";
 import { updateUser, clearUser } from '../app/reduxActions';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://35.170.242.139:3333/',
   withCredentials: true
 });
 
