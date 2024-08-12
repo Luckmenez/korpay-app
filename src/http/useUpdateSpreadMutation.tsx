@@ -1,0 +1,34 @@
+import { useMutation } from '@tanstack/react-query';
+import { api } from './axios';
+import { Box, useToast } from '@chakra-ui/react';
+
+interface CreateUserData {
+    spread: string;
+    email: string;
+}
+
+async function handleUpdateSpread(data: CreateUserData) {
+    const response = await api.post('/users/update-spread', data);
+    return response.data;
+}
+
+export const useUpdateSpreadMutation = () => {
+    const toast = useToast();
+
+    return useMutation({
+        mutationFn: handleUpdateSpread,
+        onSuccess: () => {
+            toast({
+                position: 'top-right',
+                render: () => (
+                    <Box p={3} color="white" bg="green.500">
+                        Update criado com sucesso.
+                    </Box>
+                ),
+            });
+        },
+        onError: (error) => {
+            console.error(error);
+        },
+    });
+};
