@@ -23,7 +23,7 @@ export function useQuotation() {
 
     useEffect(() => {
         const token = localStorage.getItem('auth_token');
-        const socket = io('https://korpay-core-production.up.railway.app/', {
+        const socket = io('https://35.170.242.139:3333/', {
             withCredentials: true,
             extraHeaders: {
                 Authorization: `Bearer ${token}`,
