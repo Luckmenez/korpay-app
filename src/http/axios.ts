@@ -3,7 +3,7 @@ import { decodeJwt } from "../utils/decodejwt";
 import { updateUser, clearUser } from '../app/reduxActions';
 
 export const api = axios.create({
-  baseURL: 'https://korpay-core-production.up.railway.app/',
+  baseURL: 'https://korpay-core-production-cce4.up.railway.app/',
   withCredentials: true
 });
 
