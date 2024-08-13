@@ -68,7 +68,6 @@ export function Admin() {
             spread: data.spread,
             email: selectedRow?.email as string,
         });
-        window.location.reload();
     };
 
     const columns = useMemo<ColumnDef<User, any>[]>(

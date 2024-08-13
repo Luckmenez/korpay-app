@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from './axios';
 import { Box, useToast } from '@chakra-ui/react';
 
@@ -14,6 +14,7 @@ async function handleUpdateSpread(data: CreateUserData) {
 
 export const useUpdateSpreadMutation = () => {
     const toast = useToast();
+    const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: handleUpdateSpread,
@@ -26,6 +27,7 @@ export const useUpdateSpreadMutation = () => {
                     </Box>
                 ),
             });
+            queryClient.invalidateQueries({ queryKey: ['users-list'] });
         },
         onError: (error) => {
             console.error(error);
