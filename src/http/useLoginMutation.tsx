@@ -7,7 +7,7 @@ interface LoginData {
 }
 
 export const handleLogin = async (data: LoginData) => {
-    const response = await api.post('/auth/login', data);
+    const response = await api.post('api/auth/login', data);
     return response.data;
 };
 

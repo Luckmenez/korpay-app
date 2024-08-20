@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from './axios';
 
 const getUsers = async () => {
-    const users = await api.get('/users');
+    const users = await api.get('api/users');
     return users.data;
 };
 

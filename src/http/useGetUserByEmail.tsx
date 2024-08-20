@@ -11,7 +11,7 @@ export type User = {
 };
 
 async function handleGetUserByEmail(email: string) {
-    const response = await api.get(`/users/user-by-email/${email}`);
+    const response = await api.get(`api/users/user-by-email/${email}`);
     return response.data;
 }
 

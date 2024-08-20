@@ -8,7 +8,7 @@ interface CreateUserData {
 }
 
 async function handleUpdateSpread(data: CreateUserData) {
-    const response = await api.post('/users/update-spread', data);
+    const response = await api.post('api/users/update-spread', data);
     return response.data;
 }
 

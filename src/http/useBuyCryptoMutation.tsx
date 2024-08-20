@@ -8,7 +8,7 @@ const handleBuyCrypto = async ({
     amount: string;
     quote_id: string;
 }) => {
-    return await api.post('/quotation/buy-crypto', { amount, quote_id });
+    return await api.post('api/quotation/buy-crypto', { amount, quote_id });
 };
 
 export const useBuyCryptoMutation = () => {
