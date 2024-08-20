@@ -23,7 +23,7 @@ export const useBuyCryptoMutation = () => {
 
                 const encodedMessage = encodeURIComponent(message);
 
-                const whatsappUrl = `https://wa.me/5511982360874?text=${encodedMessage}`;
+                const whatsappUrl = `https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
                 window.open(whatsappUrl, '_blank');
             }
