@@ -9,7 +9,6 @@ export const api = axios.create({
 
 api.interceptors.response.use((response) => {
   if(response.config.url === 'api/auth/login' && response.data.auth_token) {
-    console.log('bbbb', response.data.auth_token);
     localStorage.setItem('auth_token', response.data.auth_token);
     
     const decodedToken = decodeJwt(response.data.auth_token);

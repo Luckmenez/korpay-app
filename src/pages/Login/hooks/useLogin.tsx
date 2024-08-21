@@ -32,7 +32,6 @@ export function useLogin() {
                     try {
                         const decodedToken = decodeJwt(response.auth_token);
                         const userRole = decodedToken.user.role;
-                        console.log(userRole);
                         navigate(
                             userRole === 'ADMIN' ? '/admin' : '/quotation',
                         );
