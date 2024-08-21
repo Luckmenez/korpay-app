@@ -171,6 +171,41 @@ export function Admin() {
                         ))}
                     </chakra.tbody>
                 </chakra.table>
+                <Flex justifyContent="space-between" mt="4">
+                    <StandardButton
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                        label="Anterior"
+                    />
+                    <Box>
+                        Página{' '}
+                        <strong>
+                            {table.getState().pagination.pageIndex + 1} de{' '}
+                            {table.getPageCount()}
+                        </strong>
+                    </Box>
+                    <StandardButton
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                        label="Próxima"
+                    />
+                </Flex>
+                <Flex mt="4" alignItems="center">
+                    <Box>Linhas por página:</Box>
+                    <chakra.select
+                        ml="2"
+                        value={table.getState().pagination.pageSize}
+                        onChange={(e) => {
+                            table.setPageSize(Number(e.target.value));
+                        }}
+                    >
+                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                                {pageSize}
+                            </option>
+                        ))}
+                    </chakra.select>
+                </Flex>
             </Flex>
             <StandardModal isOpen={isOpen} onClose={onClose}>
                 <Flex flexDir={'column'} gap={'0.5rem'}>
