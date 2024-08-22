@@ -30,8 +30,8 @@ export function CreateNewUserModal({
     } = useForm<CreateUserForm>({
         resolver: zodResolver(createNewUserSchema),
     });
-
     const createNewUser = useCreateNewUserMutation();
+
     function handleCreateUser(data: CreateUserForm) {
         createNewUser.mutate(data);
     }
