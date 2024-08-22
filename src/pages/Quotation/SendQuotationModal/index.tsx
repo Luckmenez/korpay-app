@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useEffect, useState } from 'react';
 import { useBuyCryptoMutation } from '../../../http/useBuyCryptoMutation';
+import { StandardSelectInput } from '../../../components/StandardSelectInput';
 
 type QuotationType = {
     expires_in: number;
@@ -20,8 +21,11 @@ interface SendQuotationModalProps {
 }
 
 const quotationSchema = z.object({
-    usdt: z.string().min(1, 'Valor mínimo de 1'),
-    real: z.string().min(1, 'Valor mínimo de 1'),
+    usdt: z.string().min(1, 'Campo requerido'),
+    real: z.string().min(1, 'Campo requerido'),
+    d: z.string().refine((value) => value !== 'Selecione', {
+        message: 'Campo requerido',
+    }),
 });
 
 type QuotationFormType = z.infer<typeof quotationSchema>;
@@ -38,6 +42,7 @@ export function SendQuotationModal({
         setValue,
         watch,
         control,
+        register,
         formState: { errors },
     } = useForm<QuotationFormType>({
         resolver: zodResolver(quotationSchema),
@@ -73,6 +78,7 @@ export function SendQuotationModal({
         buyCripto.mutate({
             amount: data.usdt,
             quote_id: selectedQuotation.quote_id,
+            d: data.d,
         });
     }
 
@@ -109,6 +115,15 @@ export function SendQuotationModal({
                             label="Quantidade R$"
                         />
                     )}
+                />
+                <StandardSelectInput
+                    label="Selecione d0/d1"
+                    options={[
+                        { id: '0', option: 'Selecione', value: 'Selecione' },
+                        { id: '1', option: 'd0', value: 'd0' },
+                        { id: '2', option: 'd1', value: 'd1' },
+                    ]}
+                    {...register('d')}
                 />
                 <br />
                 <StandardButton label="enviar pedido" type="submit" />
