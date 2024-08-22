@@ -4,11 +4,13 @@ import { api } from './axios';
 const handleBuyCrypto = async ({
     amount,
     quote_id,
+    d,
 }: {
     amount: string;
     quote_id: string;
+    d: string;
 }) => {
-    return await api.post('api/quotation/buy-crypto', { amount, quote_id });
+    return await api.post('api/quotation/buy-crypto', { amount, quote_id, d });
 };
 
 export const useBuyCryptoMutation = () => {
