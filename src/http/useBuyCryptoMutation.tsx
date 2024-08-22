@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from './axios';
+import { Box, useToast } from '@chakra-ui/react';
 
 const handleBuyCrypto = async ({
     amount,
@@ -14,6 +15,7 @@ const handleBuyCrypto = async ({
 };
 
 export const useBuyCryptoMutation = () => {
+    const toast = useToast();
     return useMutation({
         mutationFn: handleBuyCrypto,
         onSuccess: (data) => {
@@ -31,6 +33,14 @@ export const useBuyCryptoMutation = () => {
             }
         },
         onError: (error) => {
+            toast({
+                position: 'top-right',
+                render: () => (
+                    <Box p={3} color="white" bg="red.500">
+                        Ocorreu um erro na compra.
+                    </Box>
+                ),
+            });
             console.error('Error buying crypto', error);
         },
     });
