@@ -18,7 +18,7 @@ type optionsType = {
 
 interface SelectInputProps
     extends Omit<React.InputHTMLAttributes<HTMLSelectElement>, 'size'> {
-    erro?: FieldError | Merge<FieldError, FieldErrorsImpl>;
+    error?: string;
     placeholder?: string;
     label: string;
     isRequired?: boolean;
@@ -32,7 +32,7 @@ export const StandardSelectInput = React.forwardRef<
     (
         {
             label,
-            erro,
+            error,
             placeholder,
             isRequired,
             options,
@@ -42,7 +42,7 @@ export const StandardSelectInput = React.forwardRef<
     ) => {
         return (
             <FormControl
-                isInvalid={!!erro}
+                isInvalid={!!error}
                 variant={'floating'}
                 id={props.name}
                 isRequired={isRequired}
@@ -69,9 +69,7 @@ export const StandardSelectInput = React.forwardRef<
                         </Select>
 
                         <FormErrorMessage>
-                            <chakra.span fontSize={'xs'}>
-                                {(erro as FieldError)?.message}
-                            </chakra.span>
+                            <chakra.span fontSize={'xs'}>{error}</chakra.span>
                         </FormErrorMessage>
                     </Flex>
                 </Box>
