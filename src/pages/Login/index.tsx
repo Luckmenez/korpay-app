@@ -12,10 +12,10 @@ export function Login() {
     return (
         <Container>
             <Flex
-                h={'100vh'}
                 flexDir={'column'}
                 justifyContent={'center'}
                 alignItems={'center'}
+                h={'100%'}
             >
                 <img src={KorPayLogo} alt="" />
                 <chakra.form onSubmit={handleLogin}>
