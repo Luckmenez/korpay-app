@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 interface ContainerProps {
     children: React.ReactNode;
@@ -6,8 +6,14 @@ interface ContainerProps {
 
 export function Container({ children }: ContainerProps) {
     return (
-        <Box bg={'primary.100'} textColor={'neutral.white'} px={'1rem'}>
+        <Flex
+            flexDir={'column'}
+            bg={'primary.100'}
+            textColor={'neutral.white'}
+            px={'1rem'}
+            h={'100%'}
+        >
             {children}
-        </Box>
+        </Flex>
     );
 }
