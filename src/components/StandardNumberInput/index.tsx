@@ -39,7 +39,7 @@ export const StandardNumberInput = forwardRef<HTMLInputElement, InputProps>(
                 >
                     <NumberInputField ref={ref} {...props} />
                 </NumberInput>
-                {error && <FormErrorMessage>{error}</FormErrorMessage>}
+                <FormErrorMessage>{error}</FormErrorMessage>
             </FormControl>
         );
     },
