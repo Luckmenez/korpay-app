@@ -21,10 +21,10 @@ interface SendQuotationModalProps {
 }
 
 const quotationSchema = z.object({
-    usdt: z.string().min(1, 'Campo requerido'),
-    real: z.string().min(1, 'Campo requerido'),
+    usdt: z.string().min(1, 'Campo necessário'),
+    real: z.string().min(1, 'Campo necessário'),
     d: z.string().refine((value) => value !== 'Selecione', {
-        message: 'Campo requerido',
+        message: 'Por favor, selecione uma opção válida',
     }),
 });
 
@@ -46,6 +46,11 @@ export function SendQuotationModal({
         formState: { errors },
     } = useForm<QuotationFormType>({
         resolver: zodResolver(quotationSchema),
+        defaultValues: {
+            usdt: '',
+            real: '',
+            d: 'Selecione',
+        },
     });
 
     const usdt = watch('usdt');
@@ -118,6 +123,7 @@ export function SendQuotationModal({
                 />
                 <StandardSelectInput
                     label="Selecione d0/d1"
+                    error={errors.d?.message}
                     options={[
                         { id: '0', option: 'Selecione', value: 'Selecione' },
                         { id: '1', option: 'd0', value: 'd0' },
