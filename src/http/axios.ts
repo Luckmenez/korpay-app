@@ -1,6 +1,6 @@
 import axios from "axios";
 import { decodeJwt } from "../utils/decodejwt";
-import { updateUser, clearUser } from '../app/reduxActions';
+import { updateUser } from '../app/reduxActions';
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -17,7 +17,6 @@ api.interceptors.response.use((response) => {
   }
   return response;
 }, (error) => {
-  clearUser();
   return Promise.reject(error);
 })
 
@@ -28,7 +27,6 @@ api.interceptors.request.use((config) => {
   }
   return config;
 }, (error) => {
-  clearUser();
   return Promise.reject(error);
 })
 
