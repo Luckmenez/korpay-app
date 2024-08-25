@@ -1,17 +1,35 @@
 import { useMutation } from '@tanstack/react-query';
+import { store } from '../app/store';
 import { api } from './axios';
 import { Box, useToast } from '@chakra-ui/react';
+import { AxiosError } from 'axios';
+import { QuotationErrorMap } from '../utils/quotationErrorMap';
+
+interface ApiErrorResponse {
+    message: string;
+}
 
 const handleBuyCrypto = async ({
     amount,
+    price,
     quote_id,
     d,
+    actual_spread,
 }: {
     amount: string;
+    price: string;
     quote_id: string;
     d: string;
+    actual_spread: string;
 }) => {
-    return await api.post('api/quotation/buy-crypto', { amount, quote_id, d });
+    return await api.post('api/quotation/buy-crypto', {
+        amount,
+        price,
+        quote_id,
+        actual_spread,
+        d,
+        user_id: store.getState().user.profile.id,
+    });
 };
 
 export const useBuyCryptoMutation = () => {
@@ -32,12 +50,13 @@ export const useBuyCryptoMutation = () => {
                 window.open(whatsappUrl, '_blank');
             }
         },
-        onError: (error) => {
+        onError: (error: AxiosError<ApiErrorResponse>) => {
+            console.log(error);
             toast({
                 position: 'top-right',
                 render: () => (
                     <Box p={3} color="white" bg="red.500">
-                        Ocorreu um erro na compra.
+                        {QuotationErrorMap(error?.response?.data?.message)}
                     </Box>
                 ),
             });
