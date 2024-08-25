@@ -82,7 +82,9 @@ export function SendQuotationModal({
 
         buyCripto.mutate({
             amount: data.usdt,
+            price: data.real,
             quote_id: selectedQuotation.quote_id,
+            actual_spread: selectedQuotation.fx_rate,
             d: data.d,
         });
     }
