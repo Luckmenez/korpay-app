@@ -19,8 +19,8 @@ import { useUpdateSpreadMutation } from '../../http/useUpdateSpreadMutation';
 import { useForm } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import KorpayLogo from '../../assets/korpay_logo.svg';
 import * as z from 'zod';
+import { StandardSelectInput } from '../../components/StandardSelectInput';
 
 type User = {
     id: number;
@@ -28,11 +28,13 @@ type User = {
     password: string;
     name: string;
     spread: number;
+    isActive: boolean;
     role: 'USER' | 'ADMIN';
 };
 
 const schema = z.object({
-    spread: z.string(),
+    spread: z.string().min(3, 'Esse campo é obrigatório'),
+    isActive: z.string().min(3, 'Esse campo é obrigatório'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -60,6 +62,8 @@ export function Admin() {
 
     const handleRowClick = (row: User) => {
         setSelectedRow(row);
+        setValue('spread', row.spread.toString());
+        setValue('isActive', row.isActive.toString());
         onOpen();
     };
 
@@ -67,6 +71,7 @@ export function Admin() {
         updateSpreadMutation.mutate({
             spread: data.spread,
             email: selectedRow?.email as string,
+            isActive: data.isActive,
         });
     };
 
@@ -82,12 +87,16 @@ export function Admin() {
                 cell: (cell) => cell.getValue(),
                 header: 'Name',
             },
-
             {
                 accessorKey: 'spread',
                 cell: (cell) => cell.getValue(),
                 header: 'Spread',
                 filterFn: 'weakEquals',
+            },
+            {
+                accessorKey: 'isActive',
+                cell: (cell) => cell.getValue().toString(),
+                header: 'Ativo',
             },
         ],
         [],
@@ -113,7 +122,6 @@ export function Admin() {
 
     return (
         <Container>
-            <chakra.img pt={'1rem'} src={KorpayLogo} />
             <Flex h={'100vh'} flexDir={'column'} maxW={'1024px'}>
                 <chakra.table>
                     <chakra.thead
@@ -222,6 +230,14 @@ export function Admin() {
                         {selectedRow?.spread}
                     </Box>
                     <form onSubmit={handleSubmit(handleUpdateSpread)}>
+                        <StandardSelectInput
+                            label="Usuário ativo"
+                            options={[
+                                { id: '1', option: 'Não', value: 'false' },
+                                { id: '2', option: 'Sim', value: 'true' },
+                            ]}
+                        />
+
                         <StandardInput
                             error={errors.spread?.message}
                             {...register('spread')}
