@@ -4,10 +4,28 @@ import { useLogin } from './hooks/useLogin';
 import { Container } from '../../components/Container';
 import KorPayLogo from '../../assets/korpay_logo.svg';
 import { CreateNewUserModal } from './CreateNewUserModal';
+import { ResetPasswordModal } from './ResetPassword';
+import { ChangePasswordModal } from './ChangePasswordModal';
 
 export function Login() {
     const { errors, handleLogin, register } = useLogin();
-    const { isOpen, onClose, onOpen } = useDisclosure();
+    const {
+        isOpen: createNewUserIsOpen,
+        onClose: createNewUserOnclose,
+        onOpen: createNewUserOnOpen,
+    } = useDisclosure();
+
+    const {
+        isOpen: resetPasswordIsOpen,
+        onClose: resetPasswordOnClose,
+        onOpen: resetPasswordOnOpen,
+    } = useDisclosure();
+
+    const {
+        isOpen: changePasswordIsOpen,
+        onClose: changePasswordOnClose,
+        onOpen: changePasswordOnOpen,
+    } = useDisclosure();
 
     return (
         <Container>
@@ -41,14 +59,41 @@ export function Login() {
                             bg={'transparent'}
                             textColor={'white'}
                             _hover={{ bg: 'transparent' }}
-                            onClick={onOpen}
+                            onClick={createNewUserOnOpen}
                         >
                             Criar novo usuário
+                        </Button>
+                        <Button
+                            bg={'transparent'}
+                            textColor={'white'}
+                            _hover={{ bg: 'transparent' }}
+                            onClick={resetPasswordOnOpen}
+                        >
+                            Resetar senha
+                        </Button>
+                        <Button
+                            bg={'transparent'}
+                            textColor={'white'}
+                            _hover={{ bg: 'transparent' }}
+                            onClick={changePasswordOnOpen}
+                        >
+                            Mudar de senha
                         </Button>
                     </Flex>
                 </chakra.form>
             </Flex>
-            <CreateNewUserModal isOpen={isOpen} onClose={onClose} />
+            <CreateNewUserModal
+                isOpen={createNewUserIsOpen}
+                onClose={createNewUserOnclose}
+            />
+            <ResetPasswordModal
+                isOpen={resetPasswordIsOpen}
+                onClose={resetPasswordOnClose}
+            />
+            <ChangePasswordModal
+                isOpen={changePasswordIsOpen}
+                onClose={changePasswordOnClose}
+            />
         </Container>
     );
 }
