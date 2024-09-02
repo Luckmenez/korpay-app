@@ -1,35 +1,34 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from './axios';
-import { Box, useToast } from '@chakra-ui/react';
+import { useStandardToast } from '../components/Toast';
 
 interface CreateUserData {
-    spread: string;
     email: string;
+    spread: string;
+    isActive: string;
 }
 
 async function handleUpdateSpread(data: CreateUserData) {
-    const response = await api.post('api/users/update-spread', data);
+    const response = await api.post('api/users/update-spread', {
+        email: data.email,
+        spread: data.spread,
+        isActive: Boolean(data.isActive),
+    });
     return response.data;
 }
 
 export const useUpdateSpreadMutation = () => {
-    const toast = useToast();
+    const toast = useStandardToast();
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: handleUpdateSpread,
         onSuccess: () => {
-            toast({
-                position: 'top-right',
-                render: () => (
-                    <Box p={3} color="white" bg="green.500">
-                        Update criado com sucesso.
-                    </Box>
-                ),
-            });
+            toast('Atuação realizada com sucesso', 'success');
             queryClient.invalidateQueries({ queryKey: ['users-list'] });
         },
         onError: (error) => {
+            toast('Erro ao realizar atuação', 'error');
             console.error(error);
         },
     });
