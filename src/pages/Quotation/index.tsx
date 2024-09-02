@@ -41,7 +41,7 @@ export function Quotation() {
                     <Heading as="h6" textAlign={'center'}>
                         {typeof quotationState.fx_rate === 'string'
                             ? 'Atualizando'
-                            : parseFloat(quotationState.fx_rate).toFixed(2)}
+                            : parseFloat(quotationState.fx_rate).toFixed(4)}
                     </Heading>
                 </Flex>
                 <StandardButton
