@@ -1,7 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from './axios';
-import { useToast } from '@chakra-ui/react';
 import { AxiosError } from 'axios';
+import { useStandardToast } from '../components/Toast';
+
+function loginErrorMessageMapper(error: string) {
+    const errorMessagesList = ['Usuário inativo', 'Email ou Senha Incorreto'];
+    if (!errorMessagesList.includes(error)) {
+        return 'Erro ao fazer login';
+    }
+
+    return error;
+}
 
 interface LoginData {
     email: string;
@@ -14,19 +23,13 @@ export const handleLogin = async (data: LoginData) => {
 };
 
 export function useLoginMutation() {
-    const toast = useToast();
+    const toast = useStandardToast();
     return useMutation({
         mutationFn: handleLogin,
         onSuccess: () => {},
         onError: (error: AxiosError<{ message: string }>) => {
-            console.log(error);
-            toast({
-                title: error.response?.data?.message,
-                position: 'top-right',
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            });
+            const capturedError = error.response?.data.message || '';
+            toast(loginErrorMessageMapper(capturedError), 'error');
         },
     });
 }
