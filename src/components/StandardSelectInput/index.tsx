@@ -8,7 +8,6 @@ import {
     chakra,
 } from '@chakra-ui/react';
 import React from 'react';
-import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
 type optionsType = {
     id: string;

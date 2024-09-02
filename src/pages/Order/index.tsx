@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { useGetOrders } from '../../http/useGetOrders';
 import {
     ColumnDef,
-    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -11,7 +10,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import { Order } from '../../http/useGetOrders';
-import { Box, Container, Flex, chakra, Input } from '@chakra-ui/react';
+import { Box, Flex, chakra, Input } from '@chakra-ui/react';
 import { StandardButton } from '../../components/Button';
 
 export function OrderTable() {
