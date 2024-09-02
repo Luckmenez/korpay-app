@@ -9,7 +9,11 @@ interface CreateUserData {
 }
 
 async function handleCreateuser(data: CreateUserData) {
-    const response = await api.post('api/auth/register', data);
+    const response = await api.post('api/auth/register', {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+    });
     return response.data;
 }
 
