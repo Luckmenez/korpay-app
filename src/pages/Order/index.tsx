@@ -57,6 +57,7 @@ export function OrderTable() {
         data: data || [],
         filterFns: {
             globalFilterFn: (row, columnId, filterValue) => {
+                console.log(columnId);
                 return Object.values(row.original).some((value) =>
                     String(value)
                         .toLowerCase()
