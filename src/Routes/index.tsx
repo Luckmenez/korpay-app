@@ -5,13 +5,15 @@ import { Quotation } from '../pages/Quotation';
 import { Admin } from '../pages/Admin';
 import { ProtectedRoutes } from './ProtectedRoutes';
 import { StandardLayout } from '../layout/StandardLayout';
+import { AdminLayout } from '../layout/AdminLayout';
+import { OrderTable } from '../pages/Order';
 
 export function Router() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Routes>
+                <Route path="/" element={<Login />} />
                 <Route element={<StandardLayout />}>
-                    <Route path="/" element={<Login />} />
                     <Route
                         path="/quotation"
                         element={
@@ -20,11 +22,21 @@ export function Router() {
                             </ProtectedRoutes>
                         }
                     />
+                </Route>
+                <Route element={<AdminLayout />}>
                     <Route
                         path="/admin"
                         element={
                             <ProtectedRoutes requiredRole="ADMIN">
                                 <Admin />
+                            </ProtectedRoutes>
+                        }
+                    />
+                    <Route
+                        path="/admin/orders"
+                        element={
+                            <ProtectedRoutes requiredRole="ADMIN">
+                                <OrderTable />
                             </ProtectedRoutes>
                         }
                     />
