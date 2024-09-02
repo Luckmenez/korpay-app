@@ -1,4 +1,4 @@
-import { Button, chakra } from '@chakra-ui/react';
+import { Button, chakra, Divider } from '@chakra-ui/react';
 import { StandardModal } from '../../../components/Modal';
 import { StandardInput } from '../../../components/input';
 import { useForm } from 'react-hook-form';
@@ -11,11 +11,17 @@ interface CreateNewUserModalProps {
     onClose: () => void;
 }
 
-const createNewUserSchema = z.object({
-    name: z.string().min(3, 'Esse campo é obrigatório'),
-    email: z.string().email('Esse campo é obrigatório'),
-    password: z.string().min(8, 'Esse campo é obrigatório'),
-});
+const createNewUserSchema = z
+    .object({
+        name: z.string().min(3, 'Esse campo é obrigatório'),
+        email: z.string().email('Esse campo é obrigatório'),
+        password: z.string().min(8, 'Esse campo é obrigatório'),
+        passwordConfirmation: z.string().min(8, 'Esse campo é obrigatório'),
+    })
+    .refine((data) => data.password === data.passwordConfirmation, {
+        message: 'As senhas não coincidem',
+        path: ['passwordConfirmation'],
+    });
 
 type CreateUserForm = z.infer<typeof createNewUserSchema>;
 
@@ -53,10 +59,16 @@ export function CreateNewUserModal({
                     label="Email"
                     {...register('email')}
                 />
+                <Divider orientation="horizontal" />
                 <StandardInput
                     error={errors.password?.message}
                     label="Senha"
                     {...register('password')}
+                />
+                <StandardInput
+                    error={errors.password?.message}
+                    label="Confirmar Senha"
+                    {...register('passwordConfirmation')}
                 />
                 <Button mt={'10px'} type="submit">
                     Criar Conta
