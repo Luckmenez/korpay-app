@@ -10,12 +10,14 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import { Order } from '../../http/useGetOrders';
-import { Box, Flex, chakra, Input } from '@chakra-ui/react';
+import { Box, Flex, chakra, Input, useDisclosure } from '@chakra-ui/react';
 import { StandardButton } from '../../components/Button';
 
 export function OrderTable() {
     const { data } = useGetOrders();
     const [globalFilter, setGlobalFilter] = useState('');
+    const { onClose, onOpen, isOpen } = useDisclosure();
+
     const columns = useMemo<ColumnDef<Order, any>[]>(
         () => [
             {
@@ -178,6 +180,11 @@ export function OrderTable() {
                     ))}
                 </chakra.select>
             </Flex>
+            <UpdateQuotationInfoModal
+                isOpen={isOpen}
+                onClose={onClose}
+                submitUpdateForm={submitUpdateForm}
+            />
         </Flex>
     );
 }
