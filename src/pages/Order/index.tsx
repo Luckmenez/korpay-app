@@ -209,6 +209,7 @@ export function OrderTable() {
                 <Box>Linhas por página:</Box>
                 <chakra.select
                     ml="2"
+                    color={'#000'}
                     value={table.getState().pagination.pageSize}
                     onChange={(e) => {
                         table.setPageSize(Number(e.target.value));
