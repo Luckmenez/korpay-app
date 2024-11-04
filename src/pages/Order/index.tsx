@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useGetOrders } from '../../http/useGetOrders';
+import { OrderStatus, useGetOrders } from '../../http/useGetOrders';
 import {
     ColumnDef,
     flexRender,
