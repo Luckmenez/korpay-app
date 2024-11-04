@@ -13,6 +13,14 @@ import { Order } from '../../http/useGetOrders';
 import { Box, Flex, chakra, Input, useDisclosure } from '@chakra-ui/react';
 import { StandardButton } from '../../components/Button';
 import { UpdateQuotationInfoModal } from './UpdateQuotationInfoModal';
+function translateStatus(status: OrderStatus) {
+    const statusMap = {
+        PENDING: 'Pendente',
+        COMPLETED: 'Concluído',
+        CANCELLED: 'Cancelado',
+    };
+    return statusMap[status];
+}
 
 export function OrderTable() {
     const { data } = useGetOrders();
