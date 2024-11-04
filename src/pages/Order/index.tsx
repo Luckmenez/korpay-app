@@ -12,6 +12,7 @@ import {
 import { Order } from '../../http/useGetOrders';
 import { Box, Flex, chakra, Input, useDisclosure } from '@chakra-ui/react';
 import { StandardButton } from '../../components/Button';
+import { UpdateQuotationInfoModal } from './UpdateQuotationInfoModal';
 
 export function OrderTable() {
     const { data } = useGetOrders();
