@@ -13,6 +13,8 @@ import { Order } from '../../http/useGetOrders';
 import { Box, Flex, chakra, Input, useDisclosure } from '@chakra-ui/react';
 import { StandardButton } from '../../components/Button';
 import { UpdateQuotationInfoModal } from './UpdateQuotationInfoModal';
+import { useUpdateQuotationMutation } from '../../http/useUpdateQuotationMutation';
+
 function translateStatus(status: OrderStatus) {
     const statusMap = {
         PENDING: 'Pendente',
@@ -25,6 +27,8 @@ function translateStatus(status: OrderStatus) {
 export function OrderTable() {
     const { data, refetch } = useGetOrders();
     const [globalFilter, setGlobalFilter] = useState('');
+    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+    const updateStatusMutation = useUpdateQuotationMutation();
     const { onClose, onOpen, isOpen } = useDisclosure();
 
     const columns = useMemo<ColumnDef<Order, any>[]>(
@@ -58,6 +62,11 @@ export function OrderTable() {
                 accessorKey: 'userId',
                 cell: (cell) => cell.getValue(),
                 header: 'User ID',
+            },
+            {
+                accessorKey: 'status',
+                cell: (cell) => translateStatus(cell.getValue()),
+                header: 'Status',
             },
         ],
         [],
