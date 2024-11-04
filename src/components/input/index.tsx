@@ -13,6 +13,7 @@ interface InputProps
     label: string;
     error?: string;
     size?: 'sm' | 'md' | 'lg';
+    autocomplete?: string;
 }
 
 export const StandardInput = forwardRef<HTMLInputElement, InputProps>(
