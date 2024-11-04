@@ -77,12 +77,15 @@ export function OrderTable() {
         data: data || [],
         filterFns: {
             globalFilterFn: (row, columnId, filterValue) => {
-                console.log(columnId);
-                return Object.values(row.original).some((value) =>
-                    String(value)
+                return Object.values(row.original).some((value) => {
+                    const translatedValue =
+                        columnId === 'status'
+                            ? translateStatus(value as OrderStatus)
+                            : value;
+                    return String(translatedValue)
                         .toLowerCase()
-                        .includes(filterValue.toLowerCase()),
-                );
+                        .includes(filterValue.toLowerCase());
+                });
             },
         },
         state: {
