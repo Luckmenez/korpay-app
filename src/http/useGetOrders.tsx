@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from './axios';
 import { User } from './useGetUserByEmail';
 
+export type OrderStatus = 'PENDING' | 'COMPLETED' | 'CANCELLED';
+
 export type Order = {
     id: number;
     capitual_id: string;
@@ -12,6 +14,7 @@ export type Order = {
     updatedAt: string;
     userId: number;
     user: Partial<User>;
+    status: OrderStatus;
 };
 
 async function handleGetOrders() {
@@ -21,7 +24,7 @@ async function handleGetOrders() {
 
 export const useGetOrders = () => {
     const query = useQuery({
-        queryKey: ['users-list'],
+        queryKey: ['orders-list'],
         queryFn: handleGetOrders,
     });
 
