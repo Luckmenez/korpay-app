@@ -95,7 +95,7 @@ export function Admin() {
             },
             {
                 accessorKey: 'isActive',
-                cell: (cell) => cell.getValue().toString(),
+                cell: (cell) => cell.getValue()?.toString(),
                 header: 'Ativo',
             },
         ],
