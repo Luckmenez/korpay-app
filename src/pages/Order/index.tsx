@@ -90,8 +90,11 @@ export function OrderTable() {
         enableColumnFilters: true,
     });
 
-    function handleRowClick(row: Order) {
-        console.log(row);
+    function handleRowClick(order: Order) {
+        setSelectedOrder(order);
+        onOpen();
+    }
+
     function submitUpdateForm(data: { status: string }) {
         if (selectedOrder !== null) {
             updateStatusMutation.mutate(
