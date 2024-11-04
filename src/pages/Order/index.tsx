@@ -23,7 +23,7 @@ function translateStatus(status: OrderStatus) {
 }
 
 export function OrderTable() {
-    const { data } = useGetOrders();
+    const { data, refetch } = useGetOrders();
     const [globalFilter, setGlobalFilter] = useState('');
     const { onClose, onOpen, isOpen } = useDisclosure();
 
@@ -92,6 +92,23 @@ export function OrderTable() {
 
     function handleRowClick(row: Order) {
         console.log(row);
+    function submitUpdateForm(data: { status: string }) {
+        if (selectedOrder !== null) {
+            updateStatusMutation.mutate(
+                {
+                    id: selectedOrder.id,
+                    status: data.status as OrderStatus,
+                },
+                {
+                    onSuccess: () => {
+                        refetch();
+                        onClose();
+                    },
+                },
+            );
+            console.log('Order ID:', selectedOrder.id);
+            console.log('Form Data:', data);
+        }
     }
 
     return (
